@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h1>LEADS:</h1>
+
+    {% for obj in obj_list %}
+        <hr>
+        <h2>{{obj.title}} -> {{obj.description}} -> {{obj.customer}}</h2>
+        <h3>created by {{obj.created_by}}</h3>
+        <hr>
+
+    {% endfor %}
+
+</body>
+</html>
