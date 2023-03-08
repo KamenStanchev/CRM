@@ -9,8 +9,7 @@
 
     {% for obj in obj_list %}
         <hr>
-        <h2>{{obj.title}} -> {{obj.description}} -> {{obj.customer}}</h2>
-        <h3>created by {{obj.created_by}}</h3>
+        <h4 style="margin: 0;">Title:{{obj.title}} || description:{{obj.description}} || customer:{{obj.customer}} || created by {{obj.created_by}}</h4>
         <hr>
 
     {% endfor %}
