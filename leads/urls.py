@@ -1,18 +1,9 @@
 from django.urls import path
 
-from leads.views import lead_list, \
-    lead_create, \
-    customer_create, \
-    lead_detail, \
-    lead_edit, \
-    lead_delete_page, \
-    lead_delete, \
-    convert_lead_to_opportunity, \
-    opportunity_list, \
-    opportunity_detail, \
-    opportunity_edit, \
-    opportunity_win,\
-    opportunity_lost
+from leads.views import lead_list, lead_create, lead_detail, lead_edit,\
+    lead_delete_page, lead_delete, convert_lead_to_opportunity,\
+    opportunity_list, opportunity_detail, opportunity_edit, opportunity_win, opportunity_lost,\
+    customer_create, customer_list, customer_detail, customer_edit
 
 urlpatterns = [
     path('all/', lead_list, name='lead-list'),
@@ -30,6 +21,9 @@ urlpatterns = [
     path('opportunity/<int:pk>/lost/', opportunity_lost, name='opportunity-lost'),
 
     path('customer-create/', customer_create, name='customer-create'),
+    path('customer-all', customer_list, name='customer-list'),
+    path('customer/<int:pk>/', customer_detail, name='customer-detail'),
+    path('customer/<int:pk>/edit/', customer_edit, name='customer-edit'),
 
 ]
 

@@ -1,0 +1,14 @@
+{% include 'base.html' %}
+{% block content %}
+
+    <h1>CUSTOMERS:</h1>
+
+    {% for obj in obj_list %}
+        <hr>
+        <h4 style="margin: 0;">Title:{{obj.title}} || description:{{obj.description}} || customer:{{obj.customer}} || created by {{obj.created_by}}</h4>
+        <a href="{% url 'customer-detail' obj.pk %}">See Customer Details</a>
+        <hr>
+
+    {% endfor %}
+
+{% endblock content %}

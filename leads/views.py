@@ -1,6 +1,6 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
-from django.views import generic
+
 from django.forms.models import model_to_dict
 
 from leads.forms import LeadForm, CustomerForm, OpportunityForm
@@ -166,3 +166,42 @@ def opportunity_lost(request, pk):
     opportunity.status = 'Lost'
     opportunity.save()
     return redirect('opportunity-detail', pk)
+
+
+def customer_list(request):
+    obj_list = Customer.objects.all()
+
+    context = {
+        'obj_list': obj_list,
+    }
+    return render(request, 'customer_list.html', context)
+
+
+def customer_detail(request, pk):
+    customer = Customer.objects.get(id=pk)
+    customer_fields = CustomerForm(data=model_to_dict(Customer.objects.get(id=pk)))
+    salesman = f'{customer.salesman.user.first_name} {customer.salesman.user.last_name}'
+    context = {
+        "object": customer,
+        "object_fields": customer_fields,
+        'salesman': salesman,
+    }
+    return render(request, "customer_detail.html", context)
+
+
+def customer_edit(request, pk):
+    customer = Customer.objects.get(id=pk)
+    form = CustomerForm(instance=customer)
+
+    if request.method == 'POST':
+        form = CustomerForm(request.POST, instance=customer)
+        if form.is_valid():
+            form.save()
+            return redirect('customer-detail', pk)
+
+    context = {
+        'form': form,
+    }
+
+    return render(request, 'edit.html', context)
+
