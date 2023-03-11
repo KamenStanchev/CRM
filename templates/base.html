@@ -3,13 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+  <style>
+    body{
+        background-color: #c3c3c3;
+    }
+  </style>
 </head>
 <body>
-    <div>
-      <a href="lead-list">LEADS</a>
-      <a href="lead-create">New Lead</a>
-      <a href="customer-create">New Customer</a>
-      <a href="#">???</a>
+    <div style="display: flex; justify-content: space-around">
+      <div style="display: flex; gap: 30px;">
+        <a href="{% url 'lead-list' %}">LEADS</a>
+        <a href="{% url 'lead-create' %}">New Lead</a>
+        <a href="{% url 'customer-create' %}">New Customer</a>
+        <a href="{% url 'opportunity-list' %}">Opportunities</a>
+        <a href="#">???</a>
+      </div>
+        Login as: {{ request.user }}
+      <div>
+
+      </div>
     </div>
     {% block content %}
     {% endblock content %}

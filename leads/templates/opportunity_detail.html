@@ -1,0 +1,23 @@
+{% include 'base.html' %}
+{% block content %}
+
+    <h1>Detail View</h1>
+
+    {% for field in object_fields %}
+        {% if field.label == 'Customer' %}
+            <li><b>{{ field.label }}:</b> {{ customer }}</li>
+        {% else %}
+            <li><b>{{ field.label }}:</b> {{ field.data }}</li>
+        {% endif %}
+    {% endfor %}
+
+    <hr>
+    <br>
+
+    <div>
+        <a href="{% url 'opportunity-edit' object.id %}"><button>Edit</button></a>
+        <a href="{% url 'opportunity-win' object.id %}"><button>WIN</button></a>
+        <a href="{% url 'opportunity-lost' object.id %}"><button>LOST</button></a>
+    </div>
+
+{% endblock content %}

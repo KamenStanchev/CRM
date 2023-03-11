@@ -1,0 +1,19 @@
+{% include 'base.html' %}
+{% block content %}
+
+    <h1>Detail View</h1>
+
+    {% for field in object_fields %}
+        <li><b>{{ field.label }}:</b> {{ field.data }}</li>
+    {% endfor %}
+
+    <hr>
+    <br>
+
+    <div>
+        <a href="{% url 'lead-edit' object.id %}"><button>Edit</button></a>
+        <a href="{% url 'lead-delete-page' object.id %}"><button>DELETE</button></a>
+        <a href="{% url 'convert-lead-to-opportunity' object.id %}"><button>Convert to opportunity</button></a>
+    </div>
+
+{% endblock content %}
