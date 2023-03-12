@@ -41,6 +41,7 @@ INSTALLED_APPS = [
 
     'agents',
     'leads',
+    'registration',
 ]
 
 MIDDLEWARE = [
