@@ -1,20 +1,12 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, reverse
 
 from registration.forms import AgentForm
+from django.views import  generic
 
 
+class SignupView(generic.CreateView):
+    template_name = 'signup.html'
+    form_class = AgentForm
 
-
-
-def sign_up(request):
-    form = AgentForm
-    if request.method == 'POST':
-        form = AgentForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return redirect('lead-list')
-
-    context = {'form': form}
-
-    return render(request, 'sign_up.html', context)
-
+    def get_success_url(self):
+        return reverse('login')

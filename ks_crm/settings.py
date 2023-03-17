@@ -128,3 +128,6 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL = 'agents.Agent'
+
+LOGIN_REDIRECT_URL = '/leads/all/'
+LOGOUT_REDIRECT_URL = '/registration/login/'
