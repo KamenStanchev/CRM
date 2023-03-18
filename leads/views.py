@@ -3,15 +3,38 @@ from django.shortcuts import render, redirect
 
 from django.forms.models import model_to_dict
 
+from agents.models import Salesman
 from leads.forms import LeadForm, CustomerForm, OpportunityForm
 from leads.models import Lead, Customer, Opportunity
 
 
+@login_required
 def lead_list(request):
-    obj_list = Lead.objects.all()
+    """
+    make obj_list with leads relevant for current user
+    1.Leads created by current user
+    2. If current user is manager: add leads for salesman in his team
+    3. If current user is general_manager -> show all leads
+    """
+    obj_list =[]
+    current_user_obj_list = Lead.objects.filter(customer__salesman__user=request.user)
+
+    for lead in current_user_obj_list:
+        print(lead.customer.salesman.email)
+        print(lead.customer.salesman.user)
+
+    if request.user.is_manager:
+        manager_salesmans = Salesman.objects.filter(manager=request.user.manager)
+        for salsman in manager_salesmans:
+            salesman_obj_list = Lead.objects.filter(created_by=salsman.user)
+            obj_list.extend(salesman_obj_list)
+    elif request.user.is_general_manager:
+        obj_list = Lead.objects.all()
 
     context = {
         'obj_list': obj_list,
+        'current_user_obj_list': current_user_obj_list,
+
     }
 
     return render(request, 'lead_list.html', context)
@@ -204,4 +227,3 @@ def customer_edit(request, pk):
     }
 
     return render(request, 'edit.html', context)
-

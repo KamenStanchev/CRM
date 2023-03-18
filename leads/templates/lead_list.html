@@ -1,8 +1,17 @@
 {% include 'base.html' %}
 {% block content %}
 
-    <h1>LEADS:</h1>
+    <h1>MY LEADS:</h1>
 
+    {% for obj in current_user_obj_list %}
+        <hr>
+        <h4 style="margin: 0;">Title:{{obj.title}} || description:{{obj.description}} || customer:{{obj.customer}} || created by {{obj.created_by}}</h4>
+        <a href="{% url 'lead-detail' obj.pk %}">See Leads Details</a>
+        <hr>
+
+    {% endfor %}
+
+    <h1>MY TEAM LEADS:</h1>
     {% for obj in obj_list %}
         <hr>
         <h4 style="margin: 0;">Title:{{obj.title}} || description:{{obj.description}} || customer:{{obj.customer}} || created by {{obj.created_by}}</h4>

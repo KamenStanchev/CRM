@@ -5,6 +5,11 @@ from registration.forms import AgentForm
 from django.views import  generic
 
 
+
+def home_page(request):
+    return render(request, 'home_page.html')
+
+
 def signup_view(request):
     current_user = request.user
     form = AgentForm()
