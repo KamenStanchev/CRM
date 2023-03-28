@@ -11,7 +11,7 @@
 
     {% endfor %}
 
-    <h1>LEADS CREATED BY ME:</h1>
+    <h1>LEADS CREATED BY ME TO OTHERS:</h1>
 
     {% for obj in leads_created_by_current_user %}
         <hr>
@@ -22,11 +22,16 @@
     {% endfor %}
 
     <h1>MY TEAM LEADS:</h1>
-    {% for obj in obj_list %}
-        <hr>
-        <h4 style="margin: 0;">Title:{{obj.title}} || description:{{obj.description}} || customer:{{obj.customer}} || created by {{obj.created_by}}</h4>
-        <a href="{% url 'lead-detail' obj.pk %}">See Leads Details</a>
-        <hr>
+    {% for key, value in obj_list.items %}
+
+        <h2>{{key}}</h2>
+            {% for obj in value %}
+            <hr>
+            <h4 style="margin: 0;">Title:{{obj.title}} || description:{{obj.description}} || customer:{{obj.customer}} || created by {{obj.created_by}}</h4>
+            <a href="{% url 'lead-detail' obj.pk %}">See Leads Details</a>
+            <hr>
+
+         {% endfor %}
 
     {% endfor %}
 

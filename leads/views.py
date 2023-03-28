@@ -16,19 +16,16 @@ def lead_list(request):
     2. If current user is manager: add leads for salesman in his team
     3. If current user is general_manager -> show all leads
     """
-    obj_list =[]
+    obj_list = {}
     current_user_obj_list = Lead.objects.filter(customer__salesman__user=request.user)
-    leads_created_by_current_user = Lead.objects.filter(created_by=request.user)
-
-    for lead in current_user_obj_list:
-        print(lead.customer.salesman.email)
-        print(lead.customer.salesman.user)
+    leads_created_by_current_user = Lead.objects.filter(created_by=request.user)\
+        .exclude(customer__salesman__user=request.user)
 
     if request.user.is_manager:
-        manager_salesmans = Salesman.objects.filter(manager=request.user.manager)
-        for salsman in manager_salesmans:
-            salesman_obj_list = Lead.objects.filter(created_by=salsman.user)
-            obj_list.extend(salesman_obj_list)
+        manager_salesmen = Salesman.objects.filter(manager=request.user.manager)
+        for salesman in manager_salesmen:
+            salesman_obj_list = Lead.objects.filter(created_by=salesman.user)
+            obj_list[salesman.first_name] = salesman_obj_list
     elif request.user.is_general_manager:
         obj_list = Lead.objects.all()
 
