@@ -11,6 +11,16 @@
 
     {% endfor %}
 
+    <h1>LEADS CREATED BY ME:</h1>
+
+    {% for obj in leads_created_by_current_user %}
+        <hr>
+        <h4 style="margin: 0;">Title:{{obj.title}} || description:{{obj.description}} || customer:{{obj.customer}} || created by {{obj.created_by}}</h4>
+        <a href="{% url 'lead-detail' obj.pk %}">See Leads Details</a>
+        <hr>
+
+    {% endfor %}
+
     <h1>MY TEAM LEADS:</h1>
     {% for obj in obj_list %}
         <hr>

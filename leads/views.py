@@ -18,6 +18,7 @@ def lead_list(request):
     """
     obj_list =[]
     current_user_obj_list = Lead.objects.filter(customer__salesman__user=request.user)
+    leads_created_by_current_user = Lead.objects.filter(created_by=request.user)
 
     for lead in current_user_obj_list:
         print(lead.customer.salesman.email)
@@ -34,6 +35,7 @@ def lead_list(request):
     context = {
         'obj_list': obj_list,
         'current_user_obj_list': current_user_obj_list,
+        'leads_created_by_current_user': leads_created_by_current_user,
 
     }
 
