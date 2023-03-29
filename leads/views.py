@@ -139,10 +139,42 @@ def convert_lead_to_opportunity(request, pk):
 
 
 def opportunity_list(request):
-    obj_list = Opportunity.objects.all()
+    obj_list = {}
+    win_obj_list = {}
+    lost_obj_list = {}
+    is_manager = False
+
+    if request.user.is_manager:
+        is_manager = True
+        manager_salesmen = Salesman.objects.filter(manager=request.user.manager)
+        for salesman in manager_salesmen:
+            salesman_obj_list = Opportunity.objects.filter(customer__salesman=salesman) \
+                .exclude(status='WIN').exclude(status='LOST')
+            salesman_win_obj_list = Opportunity.objects.filter(status='WIN').filter(customer__salesman=salesman)
+            salesman_lost_obj_list = Opportunity.objects.filter(status='LOST').filter(customer__salesman=salesman)
+
+            obj_list[salesman] = salesman_obj_list
+            win_obj_list[salesman] = salesman_win_obj_list
+            lost_obj_list[salesman] = salesman_lost_obj_list
+
+
+
+
+    elif request.user.is_general_manager:
+        obj_list = Opportunity.objects.all().exclude(status='WIN').exclude(status='LOST')
+        win_obj_list = Opportunity.objects.filter(status='WIN')
+        lost_obj_list = Opportunity.objects.filter(status='LOST')
+    else:
+        obj_list = Opportunity.objects.filter(customer__salesman__user=request.user)\
+            .exclude(status='WIN').exclude(status='LOST')
+        win_obj_list = Opportunity.objects.filter(status='WIN').filter(customer__salesman__user=request.user)
+        lost_obj_list = Opportunity.objects.filter(status='LOST').filter(customer__salesman__user=request.user)
 
     context = {
         'obj_list': obj_list,
+        'win_obj_list': win_obj_list,
+        'lost_obj_list': lost_obj_list,
+        'is_manager': is_manager,
     }
     return render(request, 'opportunity_list.html', context)
 
