@@ -3,7 +3,7 @@ from django.shortcuts import render, redirect
 
 from django.forms.models import model_to_dict
 
-from agents.models import Salesman
+from agents.models import Salesman, Manager
 from leads.forms import LeadForm, CustomerForm, OpportunityForm
 from leads.models import Lead, Customer, Opportunity
 
@@ -137,7 +137,6 @@ def convert_lead_to_opportunity(request, pk):
     }
     return render(request, 'edit.html', context)
 
-
 def opportunity_list(request):
     obj_list = {}
     win_obj_list = {}
@@ -149,9 +148,11 @@ def opportunity_list(request):
         manager_salesmen = Salesman.objects.filter(manager=request.user.manager)
         for salesman in manager_salesmen:
             salesman_obj_list = Opportunity.objects.filter(customer__salesman=salesman) \
-                .exclude(status='WIN').exclude(status='LOST')
-            salesman_win_obj_list = Opportunity.objects.filter(status='WIN').filter(customer__salesman=salesman)
-            salesman_lost_obj_list = Opportunity.objects.filter(status='LOST').filter(customer__salesman=salesman)
+                .exclude(status='WIN').exclude(status='LOST').order_by('expected_turnover')
+            salesman_win_obj_list = Opportunity.objects.filter(status='WIN').filter(customer__salesman=salesman)\
+                .order_by('expected_turnover')
+            salesman_lost_obj_list = Opportunity.objects.filter(status='LOST').filter(customer__salesman=salesman)\
+                .order_by('expected_turnover')
 
             obj_list[salesman] = salesman_obj_list
             win_obj_list[salesman] = salesman_win_obj_list
@@ -161,14 +162,27 @@ def opportunity_list(request):
 
 
     elif request.user.is_general_manager:
-        obj_list = Opportunity.objects.all().exclude(status='WIN').exclude(status='LOST')
-        win_obj_list = Opportunity.objects.filter(status='WIN')
-        lost_obj_list = Opportunity.objects.filter(status='LOST')
+        is_manager = True
+        managers = Manager.objects.all()
+        for manager in managers:
+            # manager_salesmen = Salesman.objects.filter(manager=manager)
+            manager_obj_list = Opportunity.objects.filter(customer__salesman__manager=manager) \
+                .exclude(status='WIN').exclude(status='LOST').order_by('expected_turnover')
+            manager_win_obj_list = Opportunity.objects.filter(status='WIN')\
+                .filter(customer__salesman__manager=manager).order_by('expected_turnover')
+            manager_lost_obj_list = Opportunity.objects.filter(status='LOST')\
+                .filter(customer__salesman__manager=manager).order_by('expected_turnover')
+
+            obj_list[manager] = manager_obj_list
+            win_obj_list[manager] = manager_win_obj_list
+            lost_obj_list[manager] = manager_lost_obj_list
     else:
         obj_list = Opportunity.objects.filter(customer__salesman__user=request.user)\
-            .exclude(status='WIN').exclude(status='LOST')
-        win_obj_list = Opportunity.objects.filter(status='WIN').filter(customer__salesman__user=request.user)
-        lost_obj_list = Opportunity.objects.filter(status='LOST').filter(customer__salesman__user=request.user)
+            .exclude(status='WIN').exclude(status='LOST').order_by('expected_turnover')
+        win_obj_list = Opportunity.objects.filter(status='WIN').filter(customer__salesman__user=request.user)\
+            .order_by('expected_turnover')
+        lost_obj_list = Opportunity.objects.filter(status='LOST').filter(customer__salesman__user=request.user)\
+            .order_by('expected_turnover')
 
     context = {
         'obj_list': obj_list,

@@ -1,9 +1,6 @@
 {% include 'base.html' %}
 {% block content %}
 
-    <h3>open:</h3>{{obj_list}}
-    <h3>win:</h3>{{win_obj_list}}
-    <h3>lost:</h3>{{lost_obj_list}}
     <h1>OPEN OPPORTUNITY:</h1>
     {% if is_manager %}
 
@@ -14,7 +11,7 @@
                 {% for obj in value %}
                     <hr>
                     <h4 style="margin: 0;">Title:{{obj.title}} || description:{{obj.description}} || customer:{{obj.customer}} || expected turnover: {{obj.expected_turnover}} || created by {{obj.created_by}}</h4>
-                    <a href="{% url 'opportunity-detail' obj.pk %}">See Leads Details</a>
+                    <a href="{% url 'opportunity-detail' obj.pk %}">See Opportunity Details</a>
                     <hr>
 
                 {% endfor %}
@@ -29,7 +26,7 @@
         {% for obj in obj_list %}
             <hr>
             <h4 style="margin: 0;">Title:{{obj.title}} || description:{{obj.description}} || customer:{{obj.customer}} || expected turnover: {{obj.expected_turnover}} || created by {{obj.created_by}}</h4>
-            <a href="{% url 'opportunity-detail' obj.pk %}">See Leads Details</a>
+            <a href="{% url 'opportunity-detail' obj.pk %}">See Opportunity Details</a>
             <hr>
 
         {% endfor %}
@@ -47,7 +44,7 @@
                 {% for obj in value %}
                     <hr>
                     <h4 style="margin: 0;">Title:{{obj.title}} || description:{{obj.description}} || customer:{{obj.customer}} || expected turnover: {{obj.expected_turnover}} || created by {{obj.created_by}}</h4>
-                    <a href="{% url 'opportunity-detail' obj.pk %}">See Leads Details</a>
+                    <a href="{% url 'opportunity-detail' obj.pk %}">See Opportunity Details</a>
                     <hr>
 
                 {% endfor %}
@@ -62,7 +59,7 @@
         {% for obj in win_obj_list %}
             <hr>
             <h4 style="margin: 0;">Title:{{obj.title}} || description:{{obj.description}} || customer:{{obj.customer}} || expected turnover: {{obj.expected_turnover}} || created by {{obj.created_by}}</h4>
-            <a href="{% url 'opportunity-detail' obj.pk %}">See Leads Details</a>
+            <a href="{% url 'opportunity-detail' obj.pk %}">See Opportunity Details</a>
             <hr>
 
         {% endfor %}
@@ -81,7 +78,7 @@
                 {% for obj in value %}
                     <hr>
                     <h4 style="margin: 0;">Title:{{obj.title}} || description:{{obj.description}} || customer:{{obj.customer}} || expected turnover: {{obj.expected_turnover}} || created by {{obj.created_by}}</h4>
-                    <a href="{% url 'opportunity-detail' obj.pk %}">See Leads Details</a>
+                    <a href="{% url 'opportunity-detail' obj.pk %}">See Opportunity Details</a>
                     <hr>
 
                 {% endfor %}
@@ -96,7 +93,7 @@
         {% for obj in lost_obj_list %}
             <hr>
             <h4 style="margin: 0;">Title:{{obj.title}} || description:{{obj.description}} || customer:{{obj.customer}} || expected turnover: {{obj.expected_turnover}} || created by {{obj.created_by}}</h4>
-            <a href="{% url 'opportunity-detail' obj.pk %}">See Leads Details</a>
+            <a href="{% url 'opportunity-detail' obj.pk %}">See Opportunity Details</a>
             <hr>
 
         {% endfor %}
