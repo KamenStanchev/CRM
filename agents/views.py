@@ -33,22 +33,22 @@ def profile_details(request, pk):
     return render(request, "profile_details.html", context)
 
 
-def profile_update(request):
-    current_user = request.user
-    if current_user.is_general_manager:
-        form = forms.GeneralManagerForm(instance=current_user.generalmanager)
-    elif current_user.is_manager:
-        form = forms.ManagerForm(instance=current_user.manager)
+def profile_update(request, pk):
+    update_user = Agent.objects.get(id=pk)
+    if update_user.is_general_manager:
+        form = forms.GeneralManagerForm(instance=update_user.generalmanager)
+    elif update_user.is_manager:
+        form = forms.ManagerForm(instance=update_user.manager)
     else:
-        form = forms.SalesmanForm(instance=current_user.salesman)
+        form = forms.SalesmanForm(instance=update_user.salesman)
 
     if request.method == 'POST':
-        if current_user.is_general_manager:
-            form = forms.GeneralManagerForm(request.POST, instance=current_user.generalmanager)
-        elif current_user.is_manager:
-            form = forms.ManagerForm(request.POST, instance=current_user.manager)
+        if update_user.is_general_manager:
+            form = forms.GeneralManagerForm(request.POST, instance=update_user.generalmanager)
+        elif update_user.is_manager:
+            form = forms.ManagerForm(request.POST, instance=update_user.manager)
         else:
-            form = forms.SalesmanForm(request.POST, instance=current_user.salesman)
+            form = forms.SalesmanForm(request.POST, instance=update_user.salesman)
 
         if form.is_valid():
             form.save()

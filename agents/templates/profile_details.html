@@ -15,9 +15,7 @@
     <br>
 
     <div>
-        <a href="{% url 'lead-edit' object.id %}"><button>Edit</button></a>
-        <a href="{% url 'lead-delete-page' object.id %}"><button>DELETE</button></a>
-        <a href="{% url 'convert-lead-to-opportunity' object.id %}"><button>Convert to opportunity</button></a>
+        <a href="{% url 'profile-update' object.user.id %}"><button>Edit</button></a>
     </div>
 
 {% endblock content %}
