@@ -6,7 +6,7 @@
 
         {% for key, value in obj_list.items %}
 
-            <h2>{{key}}</h2>
+            <a href="{% url 'profile-details' key.user.id %}"><h2>{{ key.first_name }}  {{ key.last_name }}</h2></a>
             {% if value %}
                 {% for obj in value %}
                     <hr>

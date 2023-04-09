@@ -25,7 +25,7 @@ def lead_list(request):
         manager_salesmen = Salesman.objects.filter(manager=request.user.manager)
         for salesman in manager_salesmen:
             salesman_obj_list = Lead.objects.filter(created_by=salesman.user)
-            obj_list[salesman.first_name] = salesman_obj_list
+            obj_list[salesman] = salesman_obj_list
     elif request.user.is_general_manager:
         obj_list = Lead.objects.all()
 
@@ -33,8 +33,8 @@ def lead_list(request):
         'obj_list': obj_list,
         'current_user_obj_list': current_user_obj_list,
         'leads_created_by_current_user': leads_created_by_current_user,
-
     }
+    print(obj_list)
 
     return render(request, 'lead_list.html', context)
 
@@ -137,6 +137,7 @@ def convert_lead_to_opportunity(request, pk):
     }
     return render(request, 'edit.html', context)
 
+
 def opportunity_list(request):
     obj_list = {}
     win_obj_list = {}
@@ -157,9 +158,6 @@ def opportunity_list(request):
             obj_list[salesman] = salesman_obj_list
             win_obj_list[salesman] = salesman_win_obj_list
             lost_obj_list[salesman] = salesman_lost_obj_list
-
-
-
 
     elif request.user.is_general_manager:
         is_manager = True

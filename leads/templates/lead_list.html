@@ -24,7 +24,8 @@
     <h1>MY TEAM LEADS:</h1>
     {% for key, value in obj_list.items %}
 
-        <h2>{{key}}</h2>
+       <a href="{% url 'profile-details' key.user.id %}"><h2>{{key.first_name}} {{key.last_name}}</h2></a>
+
             {% for obj in value %}
             <hr>
             <h4 style="margin: 0;">Title:{{obj.title}} || description:{{obj.description}} || customer:{{obj.customer}} || created by {{obj.created_by}}</h4>

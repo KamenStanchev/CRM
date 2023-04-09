@@ -24,7 +24,6 @@ def profile_details(request, pk):
         profile = Salesman.objects.get(user=agent)
         profile_fields = forms.SalesmanForm(data=model_to_dict(Salesman.objects.get(id=profile.id)))
 
-
     context = {
             'professional_role': professional_role,
             "object": profile,
