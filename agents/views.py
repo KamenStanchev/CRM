@@ -2,6 +2,8 @@ from django.shortcuts import render, redirect
 
 from . import forms
 from django.forms.models import model_to_dict
+
+from .decorators import restrict_user_to_update_profile
 from .models import Agent, GeneralManager, Manager, Salesman
 
 
@@ -31,7 +33,7 @@ def profile_details(request, pk):
         }
     return render(request, "profile_details.html", context)
 
-
+@restrict_user_to_update_profile
 def profile_update(request, pk):
     update_user = Agent.objects.get(id=pk)
     if update_user.is_general_manager:
