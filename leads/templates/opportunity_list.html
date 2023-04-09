@@ -73,7 +73,7 @@
 
         {% for key, value in lost_obj_list.items %}
 
-        <a href="{% url 'profile-details' key.user.id %}"><h2>{{ key.first_name }}  {{ key.last_name }}</h2></a>
+            <a href="{% url 'profile-details' key.user.id %}"><h2>{{ key.first_name }}  {{ key.last_name }}</h2></a>
             {% if value %}
                 {% for obj in value %}
                     <hr>

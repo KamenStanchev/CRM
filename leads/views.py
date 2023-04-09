@@ -26,8 +26,12 @@ def lead_list(request):
         for salesman in manager_salesmen:
             salesman_obj_list = Lead.objects.filter(created_by=salesman.user)
             obj_list[salesman] = salesman_obj_list
+
     elif request.user.is_general_manager:
-        obj_list = Lead.objects.all()
+        managers = Manager.objects.all()
+        for manager in managers:
+            manager_obj_list = Lead.objects.filter(customer__salesman__manager__id=manager.id)
+            obj_list[manager] = manager_obj_list
 
     context = {
         'obj_list': obj_list,

@@ -1,15 +1,16 @@
 {% include 'base.html' %}
 {% block content %}
+    {% if request.user.is_salesman %}
+        <h1>MY LEADS:</h1>
 
-    <h1>MY LEADS:</h1>
+        {% for obj in current_user_obj_list %}
+            <hr>
+            <h4 style="margin: 0;">Title:{{obj.title}} || description:{{obj.description}} || customer:{{obj.customer}} || created by {{obj.created_by}}</h4>
+            <a href="{% url 'lead-detail' obj.pk %}">See Leads Details</a>
+            <hr>
 
-    {% for obj in current_user_obj_list %}
-        <hr>
-        <h4 style="margin: 0;">Title:{{obj.title}} || description:{{obj.description}} || customer:{{obj.customer}} || created by {{obj.created_by}}</h4>
-        <a href="{% url 'lead-detail' obj.pk %}">See Leads Details</a>
-        <hr>
-
-    {% endfor %}
+        {% endfor %}
+    {% endif %}
 
     <h1>LEADS CREATED BY ME TO OTHERS:</h1>
 
@@ -26,13 +27,13 @@
 
        <a href="{% url 'profile-details' key.user.id %}"><h2>{{key.first_name}} {{key.last_name}}</h2></a>
 
-            {% for obj in value %}
+        {% for obj in value %}
             <hr>
             <h4 style="margin: 0;">Title:{{obj.title}} || description:{{obj.description}} || customer:{{obj.customer}} || created by {{obj.created_by}}</h4>
             <a href="{% url 'lead-detail' obj.pk %}">See Leads Details</a>
             <hr>
 
-         {% endfor %}
+        {% endfor %}
 
     {% endfor %}
 
