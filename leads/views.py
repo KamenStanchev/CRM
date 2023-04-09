@@ -222,14 +222,14 @@ def opportunity_edit(request, pk):
 
 def opportunity_win(request, pk):
     opportunity = Opportunity.objects.get(id=pk)
-    opportunity.status = 'Win'
+    opportunity.status = 'WIN'
     opportunity.save()
     return redirect('opportunity-detail', pk)
 
 
 def opportunity_lost(request, pk):
     opportunity = Opportunity.objects.get(id=pk)
-    opportunity.status = 'Lost'
+    opportunity.status = 'LOST'
     opportunity.save()
     return redirect('opportunity-detail', pk)
 

@@ -7,6 +7,9 @@ class Agent(AbstractUser):
     is_manager = models.BooleanField(default=False)
     is_general_manager = models.BooleanField(default=False)
 
+    def __str__(self):
+        return  self.username + ' pk: ' + str(self.pk)
+
 
 
 
