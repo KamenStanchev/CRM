@@ -33,6 +33,7 @@ def profile_details(request, pk):
         }
     return render(request, "profile_details.html", context)
 
+
 @restrict_user_to_update_profile
 def profile_update(request, pk):
     update_user = Agent.objects.get(id=pk)
