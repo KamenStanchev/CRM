@@ -23,6 +23,4 @@ def restrict_user_to_update_profile(function):
 
         return HttpResponse(f'You are not allowed to update this profile')
 
-
-
     return wrapper

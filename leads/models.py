@@ -25,7 +25,7 @@ class Lead(models.Model):
     created_by = models.ForeignKey(Agent, on_delete=models.SET_NULL, null=True)
 
     def __str__(self):
-        return f'{self.customer.name} - {self.title}'
+        return f'{self.customer.name} - {self.title} pk: {self.id}'
 
 
 class Opportunity(models.Model):

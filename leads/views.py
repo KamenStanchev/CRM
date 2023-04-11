@@ -4,6 +4,7 @@ from django.shortcuts import render, redirect
 from django.forms.models import model_to_dict
 
 from agents.models import Salesman, Manager
+from leads.decorators import allowed_to_delete_lead
 from leads.forms import LeadForm, CustomerForm, OpportunityForm
 from leads.models import Lead, Customer, Opportunity
 
@@ -99,6 +100,7 @@ def lead_edit(request, pk):
     return render(request, 'edit.html', context)
 
 
+@allowed_to_delete_lead
 def lead_delete_page(request, pk):
     lead = Lead.objects.get(id=pk)
     lead_fields = LeadForm(data=model_to_dict(Lead.objects.get(id=pk)))
