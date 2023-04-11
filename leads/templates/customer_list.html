@@ -5,7 +5,7 @@
 
     {% for obj in obj_list %}
         <hr>
-        <h4 style="margin: 0;">Title:{{obj.title}} || description:{{obj.description}} || customer:{{obj.customer}} || created by {{obj.created_by}}</h4>
+        <h4 style="margin: 0;">Name:{{obj.name}} || Salesman:{{obj.salesman}}</h4>
         <a href="{% url 'customer-detail' obj.pk %}">See Customer Details</a>
         <hr>
 

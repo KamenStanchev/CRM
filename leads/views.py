@@ -4,7 +4,7 @@ from django.shortcuts import render, redirect
 from django.forms.models import model_to_dict
 
 from agents.models import Salesman, Manager
-from leads.decorators import allowed_to_delete_lead
+from leads.decorators import allowed_to_delete_lead, allowed_to_edit_lead
 from leads.forms import LeadForm, CustomerForm, OpportunityForm
 from leads.models import Lead, Customer, Opportunity
 
@@ -76,13 +76,16 @@ def customer_create(request):
 def lead_detail(request, pk):
     lead = Lead.objects.get(id=pk)
     lead_fields = LeadForm(data=model_to_dict(Lead.objects.get(id=pk)))
+    customer = lead.customer.name
     context = {
         "object": lead,
         "object_fields": lead_fields,
+        'customer': customer,
     }
     return render(request, "lead_detail.html", context)
 
 
+@allowed_to_edit_lead
 def lead_edit(request, pk):
     lead = Lead.objects.get(id=pk)
     form = LeadForm(instance=lead)

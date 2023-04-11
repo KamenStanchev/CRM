@@ -33,3 +33,19 @@ def allowed_to_delete_lead(function):
         return HttpResponse(f'You are not allowed to delete this lead')
 
     return wrapper
+
+
+def allowed_to_edit_lead(function):
+    def wrapper(request, *args, **kwargs):
+        current_user = request.user
+        current_lead_id = int(kwargs['pk'])
+        current_lead = Lead.objects.get(id=current_lead_id)
+
+        if request.user.is_salesman and\
+                (current_lead.created_by == current_user or
+                 current_lead.customer.salesman == Salesman.objects.get(user=current_user)):
+            return function(request, *args, **kwargs)
+
+        return HttpResponse(f'You are not allowed to edit this lead')
+
+    return wrapper

@@ -15,7 +15,7 @@ class Customer(models.Model):
     salesman = models.ForeignKey(Salesman, on_delete=models.SET_NULL, null=True)
 
     def __str__(self):
-        return self.name
+        return f'{self.name} + {self.salesman} + {self.pk}'
 
 
 class Lead(models.Model):
