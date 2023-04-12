@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from django.db import models
 
 from agents.models import Salesman, Agent
@@ -16,6 +18,17 @@ class Customer(models.Model):
 
     def __str__(self):
         return f'{self.name} + {self.salesman} + {self.pk}'
+
+
+class CustomerChange(models.Model):
+    customer = models.ForeignKey
+
+    old_name = models.CharField(max_length=33, unique=True)
+    new_name = models.CharField(max_length=33, unique=True)
+
+    date = models.DateTimeField(default=datetime.now())
+    # old_salesman = models.ForeignKey(Salesman, on_delete=models.SET_NULL, null=True)
+    # new_salesman = models.ForeignKey(Salesman, on_delete=models.SET_NULL, null=True)
 
 
 class Lead(models.Model):

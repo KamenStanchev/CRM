@@ -23,7 +23,7 @@ def allowed_to_delete_lead(function):
                 if salesman.manager.user == request.user:
                     return function(request, *args, **kwargs)
 
-        # Allow deleting if lead owner salesman is in current manager team
+            # Allow deleting if lead owner salesman is in current manager team
             if lead_owner_salesman.manager.user.id == current_user_id:
                 return function(request, *args, **kwargs)
 
@@ -41,7 +41,7 @@ def allowed_to_edit_lead(function):
         current_lead_id = int(kwargs['pk'])
         current_lead = Lead.objects.get(id=current_lead_id)
 
-        if request.user.is_salesman and\
+        if request.user.is_salesman and \
                 (current_lead.created_by == current_user or
                  current_lead.customer.salesman == Salesman.objects.get(user=current_user)):
             return function(request, *args, **kwargs)
